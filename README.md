@@ -35,6 +35,7 @@ npm run build
 ### CSS 框架 - tailwind
 
 - 參考網址：https://tailwindcss.com/docs/guides/vite
+  (參考網址需要的流程＆設定檔調整)
 - 檔案：src/main.js/
 
 ```sh
