@@ -1,82 +1,117 @@
-<script>
+<!-- 不需要esport dafault { setup (){....}} -->
+
+<script setup>
 import DeviceInfo from './components/headers/info.vue'
 import DeviceItem from './components/devices/item.vue'
 import axios from 'axios';
+import { ref ,reactive } from 'vue'  // 資料是否有”連動效果“ helper function
 
 // 獨立通用id格式
 import {v4 as uuidv4 } from 'uuid'
 
 
-export default {
-  setup(){
-    // options - > Composition
-    console.log('first step setup')
-  },
-  beforeCreate(){
-    console.log("bc")
-  },
-  created(){
-    console.log('如果想要更早撈取到API資料，這邊也可以')
-    console.log(this.title)
-  },
-  // 元件
-  components:{
-    // ES6寫法 DeviceInfo = DeviceInfo:DeviceInfo
-    DeviceInfo,
-    DeviceItem,
-  },
-  // 資料
-  data: function () {
-    return {
-      title: "AUO_Camy",
-      device: "",
-      devices: [],
+// export default {
+// setup(){
+  // options - > Composition
+
+const title = "AUO_camy"
+let device = ref('') // ref 連動後取值使用 value
+const devices = reactive([]) // reactive 只能處理“物件”，取物件的時候不用value，直接拿東西
+
+function addDevice() {
+  if (device.value !== "") {
+    const item = {
+      id: uuidv4(),
+      title: device.value,
     };
-  },
-  // 監看/或監聽器
-  // watch:{
-  //   device(newValue,oldValue){
-  //     console.log({newValue,oldValue})
-  //   }
+    //  這邊可以查看 ref & reactive 取出東西的差別
+    devices.unshift(item);
+    device.value = "";
+  }
+}
+function removeItem(id){
+  // 找到原本資料集id的位置
+  const item = devices.findIndex((device) => {
+    return device.id === id
+  })
+  // 刪除idindex，splice(index,刪除幾個)
+  devices.splice(item, 1)
+}
+  // script 加入setup 也不用寫return
+  // return {
+  //   title,
+  //   device,
+  //   devices,
+  //   addDevice,
+  //   removeItem,
+  // }
+
+// }
+
+  // script 加入元件 也不用寫了
+  // 元件
+// components: {
+//   // ES6寫法 DeviceInfo = DeviceInfo:DeviceInfo
+//   DeviceInfo,
+//   DeviceItem,
+// }
+
+// beforeCreate(){
+//   console.log("bc")
+// },
+// created(){
+//   console.log('如果想要更早撈取到API資料，這邊也可以')
+//   console.log(this.title)
+// },
+
+// - 資料(optition-->compostion 放置setup)
+// data: function () {
+//   return {
+//     title: "AUO_Camy",
+//     device: "",
+//     devices: [],
+//   };
+// },
+
+// - 函式 (optition-->compostion 放置setup)
+  // methods: {
+  // 下層給予的廣播，透過函式接收資料
+  // removeItem(id){
+  //   // 找到原本資料集id的位置
+  //   const item = this.devices.findIndex((device)=>{
+  //     return device.id === id 
+  //   })
+  //   // 刪除idindex，splice(index,刪除幾個)
+  //   this.devices.splice(item,1)
   // },
 
-  // 函式
-  methods: {
-    // 下層給予的廣播，透過函式接收資料
-    removeItem(id){
-      // 找到原本資料集id的位置
-      const item = this.devices.findIndex((device)=>{
-        return device.id === id 
-      })
-      // 刪除idindex，splice(index,刪除幾個)
-      this.devices.splice(item,1)
-    },
+  // addDevice() {
+  //   if (this.device !== "") {
+  //     const item = {
+  //       id: uuidv4(),
+  //       title: this.device,
+  //     };
+  //     this.devices.unshift(item);
+  //     this.device = "";
+  //   }
+  // },
+// },
 
-    addDevice() {
-      if (this.device !== "") {
-        this.devices.unshift({
-          id:uuidv4(),
-          title:this.device,
-          });
-        this.device = "";
-      }
-    },
-  },
-  // vue lifecycle -專有名詞
-  beforeMount:function(){
-    console.log('適合在這邊撈取api回來')
-    axios.get('https://webdev.alphacamp.io/api/movies').then(({data
-    })=>{
-      // this.devices = data.results
-      console.log(data)
-    })
-  },
-  // vue lifecycle -專有名詞
-  // mounted 為vue-lifecycle最後一個週期
-  mounted:function(){
-    console.log('end')
-  }
-};
+// // vue lifecycle -專有名詞
+// beforeMount:function(){
+//   console.log('適合在這邊撈取api回來')
+//   axios.get('https://webdev.alphacamp.io/api/movies').then(({data
+//   })=>{
+//     // this.devices = data.results
+//     console.log(data)
+//   })
+// },
+
+// // vue lifecycle -專有名詞
+// // mounted 為vue-lifecycle最後一個週期
+// mounted:function(){
+//   console.log('end')
+// }
 </script>
 
 
@@ -134,6 +169,10 @@ label {
 /* input class css type  */
 .input-device{
   @apply:text-white bg-black p-2;
+}
+
+button:hover{
+  opacity: 0.8;
 }
 </style>
 
