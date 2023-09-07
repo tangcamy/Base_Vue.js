@@ -41,7 +41,7 @@ function removeItem(id){
   })
   // 刪除idindex，splice(index,刪除幾個)
   devices.splice(item, 1)
-  //local storage 重新刷新資料
+  //local storage重新刷新資料
   localStorage.setItem(StorageKey, JSON.stringify(devices))
 }
 // composition - lifecycle
