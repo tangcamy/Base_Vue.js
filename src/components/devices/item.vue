@@ -1,18 +1,35 @@
-<script>
-export default {
-  props: {
-    device: {
-      type:Object,
-      required:true,
-    },
+<script setup>
+import { defineProps } from 'vue'; //compiler macros 必須於< script setup>時使用，不然會出錯
+const props = defineProps({
+  device:{
+  type:Object,
+  required:true,
   },
-  methods:{
-    remove(){
-      // 子層告訴上層：廣播事件
-      this.$emit('remove-item',this.device.id)
-    }
-  }
-};
+})
+
+// 廣播事件(compiler macros 只能在 <script setup>狀態下使用)
+const emits = defineEmits(['remove-item'])
+
+// 點選到的id廣播給上層app.vue 進行刪除
+const remove = () => {
+  // console.log(emits)，是為一個函式(event, ...args) => instance.emit(event, ...args)
+  emits('remove-item',props.device.id)
+}
+
+// export default {
+//   props: {
+//     device: {
+//       type:Object,
+//       required:true,
+//     },
+//   },
+//   methods:{
+//     remove(){
+//       // 子層告訴上層：廣播事件
+//       this.$emit('remove-item',this.device.id)
+//     }
+//   }
+// };
 </script>
 
 
