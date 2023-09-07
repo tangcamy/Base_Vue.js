@@ -6,9 +6,19 @@ import axios from 'axios';
 // 獨立通用id格式
 import {v4 as uuidv4 } from 'uuid'
 
-// options - > Composition
 
 export default {
+  setup(){
+    // options - > Composition
+    console.log('first step setup')
+  },
+  beforeCreate(){
+    console.log("bc")
+  },
+  created(){
+    console.log('如果想要更早撈取到API資料，這邊也可以')
+    console.log(this.title)
+  },
   // 元件
   components:{
     // ES6寫法 DeviceInfo = DeviceInfo:DeviceInfo
