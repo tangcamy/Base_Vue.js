@@ -13,7 +13,7 @@ const props = defineProps({
 
 // 需要將defineProps 用一個props變數存取，才能透過props.devices取得資料
 // 如果直接definProps , 下面devices.length會出錯
-
+// computed具有連動效果
 const deviceCount = computed(()=>props.devices.length) //簡化函式寫法，把大括號＆return拿掉即可
 // const deviceCount = computed(()=>{
 //   return props.devices.length
