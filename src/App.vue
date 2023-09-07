@@ -3,9 +3,10 @@ import DeviceInfo from './components/headers/info.vue'
 import DeviceItem from './components/devices/item.vue'
 import axios from 'axios';
 
-
 // 獨立通用id格式
 import {v4 as uuidv4 } from 'uuid'
+
+// options - > Composition
 
 export default {
   // 元件
@@ -22,6 +23,13 @@ export default {
       devices: [],
     };
   },
+  // 監看/或監聽器
+  // watch:{
+  //   device(newValue,oldValue){
+  //     console.log({newValue,oldValue})
+  //   }
+  // },
+
   // 函式
   methods: {
     // 下層給予的廣播，透過函式接收資料
@@ -49,7 +57,7 @@ export default {
     console.log('適合在這邊撈取api回來')
     axios.get('https://webdev.alphacamp.io/api/movies').then(({data
     })=>{
-      this.devices = data.results
+      // this.devices = data.results
       console.log(data)
     })
   },
@@ -60,6 +68,8 @@ export default {
   }
 };
 </script>
+
+
 
 <template>
   <main class="mx-12">  
