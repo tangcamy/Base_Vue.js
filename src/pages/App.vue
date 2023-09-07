@@ -19,6 +19,7 @@ import {v4 as uuidv4 } from 'uuid'
 const title = "AUO_camy"
 let device = ref('') // ref 連動後取值使用 value
 const devices = reactive([]) // reactive 只能處理“物件”，取物件的時候不用value，直接拿東西
+const StorageKey = 'deviceList'
 
 function addDevice() {
   if (device.value !== "") {
@@ -28,6 +29,8 @@ function addDevice() {
     };
     //  這邊可以查看 ref & reactive 取出東西的差別
     devices.unshift(item);
+    // 儲存在local storage，需轉格式為JSON
+    localStorage.setItem(StorageKey,JSON.stringify(devices))
     device.value = "";
   }
 }
@@ -38,6 +41,8 @@ function removeItem(id){
   })
   // 刪除idindex，splice(index,刪除幾個)
   devices.splice(item, 1)
+  //local storage 重新刷新資料
+  localStorage.setItem(StorageKey, JSON.stringify(devices))
 }
 // composition - lifecycle
 onMounted(()=>{
@@ -47,6 +52,11 @@ onMounted(()=>{
 //composition - lifecycle，雖然是在onMounted後面，但他的lifecycle會先執行
 onBeforeMount(()=> {
   console.log('before mounted')
+
+  // 把local storage 儲存的撈取出來，需轉格式
+  const saveDevices = JSON.parse(localStorage.getItem(StorageKey))
+  // 因devices 為 const 不能assign ，只能賦值 ，（出錯範例：devices.value = saveDevices）
+  devices.push(...saveDevices)
 })
 
 onBeforeUnmount(()=>{

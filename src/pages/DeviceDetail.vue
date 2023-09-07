@@ -1,5 +1,5 @@
 
 
 <template>  
-<h1>設備：{{$route.params.deviceId }}</h1>
+  <h1 class="my-6 text-xl">設備：{{$route.params.deviceId }}</h1>
 </template>
