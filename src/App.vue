@@ -1,8 +1,10 @@
 <!-- 不需要esport dafault { setup (){....}} -->
 
 <script setup>
-import DeviceInfo from './components/headers/info.vue'
-import DeviceItem from './components/devices/item.vue'
+// import DeviceInfo from './components/headers/info.vue'
+// import DeviceItem from './components/devices/item.vue'
+import DeviceInfo from '@/components/headers/info.vue' //@表示從src開始 ，可以看vite.config.js
+import DeviceItem from '@/components/devices/item.vue'
 import axios from 'axios';
 import { ref ,reactive } from 'vue'  // 資料是否有”連動效果“ helper function
 
