@@ -6,6 +6,7 @@ import { createRouter,createWebHashHistory,createWebHistory} from "vue-router"
 import Entry from './Entry.vue'
 import App from '@/pages/App.vue'
 import About from '@/pages/About.vue'
+import DeviceDetail from '@/pages/DeviceDetail.vue'
 
 // console.log(createRouter)可以印出來看是否有完整
 
@@ -13,6 +14,8 @@ import About from '@/pages/About.vue'
 const matchedRoute = [
   { path: '/', component: App }, 
   { path: '/about', component: About },
+  // 路由匹配語法：https://router.vuejs.org/zh/guide/essentials/route-matching-syntax.html
+  { path: '/devices/:deviceId', component: DeviceDetail },
 ]
 // 建立（路由）
 const appRouter = createRouter({

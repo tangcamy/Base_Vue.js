@@ -1,6 +1,8 @@
 <script setup>
 import { defineProps } from 'vue'; //compiler macros 必須於< script setup>時使用，不然會出錯
 import { onBeforeUnmount } from 'vue'  //helper function
+import { RouterLink } from "vue-router"
+import { computed } from 'vue';
 const props = defineProps({
   device:{
   type:Object,
@@ -8,6 +10,7 @@ const props = defineProps({
   },
 })
 
+const url = computed(()=> `/devices/${props.device.id}`)
 
 
 // 廣播事件(compiler macros 只能在 <script setup>狀態下使用)
@@ -42,7 +45,11 @@ onBeforeUnmount(() => {
 
 
 <template>
-  <li class="flex items-center justify-between bg-slate-100 px-2 mt-2 py-1 text-lg">{{ device.title }}
+  <li class="flex items-center justify-between bg-slate-100 px-2 mt-2 py-1 text-lg">
+    <!-- 原本 -->
+    <!-- <RouterLink v-bind:to="`/devices/${device.id}`"> {{ device.title }} </RouterLink> -->
+
+    <RouterLink v-bind:to="url"> {{ device.title }} </RouterLink>
     <button @click.prevent="remove" class="bg-black text-white px-2 py-1  ">x</button>
   </li>
 </template>
