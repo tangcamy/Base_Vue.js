@@ -1,11 +1,14 @@
 <script setup>
 import { defineProps } from 'vue'; //compiler macros 必須於< script setup>時使用，不然會出錯
+import { onBeforeUnmount } from 'vue'  //helper function
 const props = defineProps({
   device:{
   type:Object,
   required:true,
   },
 })
+
+
 
 // 廣播事件(compiler macros 只能在 <script setup>狀態下使用)
 const emits = defineEmits(['remove-item'])
@@ -15,6 +18,10 @@ const remove = () => {
   // console.log(emits)，是為一個函式(event, ...args) => instance.emit(event, ...args)
   emits('remove-item',props.device.id)
 }
+// 當remove被按掉的時候會出現這個
+onBeforeUnmount(() => {
+  console.log('before unmounted')
+})
 
 // export default {
 //   props: {
