@@ -60,7 +60,7 @@ onBeforeUnmount(() => {
 button{
   background-color:gray;
   border-radius: 30px;
-  opacity: 1;
+  opacity: 1; 
 }
 button:hover{
   opacity: 0.5;
